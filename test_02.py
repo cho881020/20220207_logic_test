@@ -1,12 +1,12 @@
 import random
 
-# 추가 문제 => 코인을 각각 20개씩 갖고 시작.
+# 추가 문제 => 코인을 각각 10개씩 갖고 시작.
 #  홀/짝에 몇개를 베팅할지 1~5 사이로 입력 제한.
 #    => 내가 가진 코인 갯수보다 많이 베팅은 불가.
 #  베팅한 갯수 만큼 코인이 이동하도록.
 
-user_coin = 20
-cpu_coin = 20
+user_coin = 10
+cpu_coin = 10
 
 while True:
     
@@ -48,26 +48,31 @@ while True:
             
             print('사용자 승리입니다.')
             
-            # 사용자 승리. => 코인 한개 CPU로부터 받아오자.
-            user_coin += 1
-            cpu_coin -= 1
+            # 사용자 승리. => 코인을 베팅한 만큼 CPU로부터 받아오자.
+            user_coin += user_bet_coin
+            cpu_coin -= user_bet_coin
         else:
             print('사용자 패배입니다.')
-            user_coin -= 1
-            cpu_coin += 1
+            user_coin -= user_bet_coin
+            cpu_coin += user_bet_coin
     else:
         # 짝을 입력한 경우.
         if cpu_count % 2 == 0:
             
             print('사용자 승리입니다.')
             # 맞춘 경우.
-            user_coin += 1
-            cpu_coin -= 1
+            user_coin += user_bet_coin
+            cpu_coin -= user_bet_coin
         else:
             
             print('사용자 패배입니다.')
-            user_coin -= 1
-            cpu_coin += 1
+            user_coin -= user_bet_coin
+            cpu_coin += user_bet_coin
+            
+    # 현재 각자의 코인 갯수도  출력
+    
+    print(f'사용자 보유 코인 : {user_coin}개')
+    print(f'컴퓨터 보유 코인 : {cpu_coin}개')
             
     # 둘중 하나의 코인이 다 떨어졌다면?  경기 종료
     
