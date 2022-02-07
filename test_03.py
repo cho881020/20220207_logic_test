@@ -24,3 +24,16 @@ for coin_item in binance_json:
         binance_btc_price_dollar  =  float(coin_item['price'])
         
 print(f'해외 Binance의 BTC 가격 : {binance_btc_price_dollar}$')
+
+
+# 현재 1달러당 원화로는 얼마인지? -> API 활용
+
+dollar_response = requests.get('https://quotation-api-cdn.dunamu.com/v1/forex/recent?codes=FRX.KRWUSD')
+dollar_json = dollar_response.json()
+
+dollor_won = dollar_json[0]['basePrice']
+
+print(f'현재 환율 : {dollor_won}')
+
+binance_btc_price_won = binance_btc_price_dollar * dollor_won
+print(f'해외 Binance의 BTC 가격 : {binance_btc_price_won}원')
