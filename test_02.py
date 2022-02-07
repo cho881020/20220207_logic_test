@@ -5,8 +5,8 @@ import random
 #    => 내가 가진 코인 갯수보다 많이 베팅은 불가.
 #  베팅한 갯수 만큼 코인이 이동하도록.
 
-user_coin = 3
-cpu_coin = 3
+user_coin = 20
+cpu_coin = 20
 
 while True:
     
@@ -20,6 +20,23 @@ while True:
     if user_answer not in ['홀', '짝']:
         print("잘못된 입력입니다.")
         continue  # 반복문의 이번 바퀴만 skip
+        
+        
+    # 몇개의 코인을 베팅할지.
+    user_bet_coin = int(input('몇개의 코인을 베팅? 1~5 사이로 : '))
+    
+    if user_bet_coin not in range(1, 6):  # 1~ 6직전 : 1~5 사이에 없는지?
+        print('1~5개 사이만 베팅 가능합니다.')
+        continue
+    
+    if user_bet_coin > user_coin:  # 내가 가진 코인보다 더 많이 베팅함.
+        print('보유 코인이 부족합니다.')
+        continue
+    
+    
+    if user_bet_coin > cpu_coin:  # CPU가 코인 부족.
+        print('상대방의 보유 코인이 부족합니다.')
+        continue
         
     # 제대로 입력햇다면 마저 진행.
     
