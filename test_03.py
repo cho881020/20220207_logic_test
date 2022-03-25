@@ -6,6 +6,7 @@ import requests
 import datetime
 
 while True:
+    print("===================================")
     # 자동 모니터링 진행.
     print(f'현재 일시 : {datetime.datetime.now()}')
 
@@ -20,16 +21,30 @@ while True:
 
     # 바이낸스의 현재 시세 조회 -> $로 리턴됨. * 환율로, 원화로 만들어서 업비트와 비교.
 
-    binance_response = requests.get('https://api.binance.com/api/v1/ticker/allPrices')
-    binance_json = binance_response.json()
+    # binance_response = requests.get('https://api.binance.com/api/v1/ticker/allPrices')
+    # binance_json = binance_response.json()
 
-    # binance_json은 일종의 리스트.
+    # # binance_json은 일종의 리스트.
 
-    for coin_item in binance_json:
-        if coin_item['symbol'] == 'BTCUSDT':
-            binance_btc_price_dollar  =  float(coin_item['price'])
+    # for coin_item in binance_json:
+    #     if coin_item['symbol'] == 'BTCUSDT':
+    #         binance_btc_price_dollar  =  float(coin_item['price'])
             
-    print(f'해외 Binance의 BTC 가격 : {binance_btc_price_dollar}$')
+    # print(f'해외 Binance의 BTC 가격 : {binance_btc_price_dollar}$')
+    
+    
+    # 비트맥스의 현재 시세 조회 -> $로 리턴됨. * 환율로, 원화로 만들어서 업비트와 비교.
+
+    bitmex_response = requests.get('https://www.bitmex.com/api/v1/instrument?symbol=xbtusd')
+    bitmex_json = bitmex_response.json()
+    bitmex_btc_price_dollar  =  float(bitmex_json[0]['lastPrice'])
+    # # binance_json은 일종의 리스트.
+
+    # for coin_item in binance_json:
+    #     if coin_item['symbol'] == 'BTCUSDT':
+    #         binance_btc_price_dollar  =  float(coin_item['price'])
+            
+    print(f'해외 Bitmex의 BTC 가격 : {bitmex_btc_price_dollar}$')
 
 
     # 현재 1달러당 원화로는 얼마인지? -> API 활용
@@ -41,7 +56,7 @@ while True:
 
     print(f'현재 환율 : {dollor_won}')
 
-    binance_btc_price_won = binance_btc_price_dollar * dollor_won
+    binance_btc_price_won = bitmex_btc_price_dollar * dollor_won
     print(f'해외 Binance의 BTC 가격 : {binance_btc_price_won}원')
 
 
@@ -52,6 +67,7 @@ while True:
     premium = round(premium, 2)
 
     print(f'국내 BTC가 해외 BTC보다 {premium}% 더 비쌉니다.')
+    print("===================================")
     
     # 2초 정지 -> 재실행
-    sleep(2)
+    sleep(5)
